@@ -1,0 +1,16 @@
+{% extends "biblioteca/base.html" %}
+{% block content %}
+<h1>Acervo</h1>
+<ul>
+  {% for livro in livros %}
+    <li>
+      {{ livro.titulo }} — {{ livro.autor }}
+      (CDU: {{ livro.cdu|default:"—" }}, CDI: {{ livro.cdi|default:"—" }})
+      · <a href="{% url 'biblioteca:lista_resenhas' livro.id %}">Resenhas</a>
+      · <a href="{% url 'biblioteca:nova_resenha' livro.id %}">Avaliar</a>
+    </li>
+  {% empty %}
+    <li>Nenhum livro cadastrado.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

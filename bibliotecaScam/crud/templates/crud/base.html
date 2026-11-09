@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Biblioteca Escolar</title>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'biblioteca:lista_livros' %}">Livros</a> |
+    <a href="{% url 'biblioteca:novo_livro' %}">Novo Livro</a> |
+    <a href="{% url 'biblioteca:novo_emprestimo' %}">Empréstimo</a> |
+    <a href="{% url 'biblioteca:lista_emprestimos' %}">Empréstimos</a>
+  </nav>
+
+  {% for m in messages %}
+    <p><strong>{{ m.tags }}</strong>: {{ m }}</p>
+  {% endfor %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>
