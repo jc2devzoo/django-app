@@ -1,4 +1,4 @@
-{% extends "biblioteca/base.html" %}
+{% extends "crud/base.html" %}
 {% block content %}
 <h1>Acervo</h1>
 <ul>
@@ -6,8 +6,8 @@
     <li>
       {{ livro.titulo }} — {{ livro.autor }}
       (CDU: {{ livro.cdu|default:"—" }}, CDI: {{ livro.cdi|default:"—" }})
-      · <a href="{% url 'biblioteca:lista_resenhas' livro.id %}">Resenhas</a>
-      · <a href="{% url 'biblioteca:nova_resenha' livro.id %}">Avaliar</a>
+      · <a href="{% url 'crud:lista_resenhas' livro.id %}">Resenhas</a>
+      · <a href="{% url 'crud:nova_resenha' livro.id %}">Avaliar</a>
     </li>
   {% empty %}
     <li>Nenhum livro cadastrado.</li>

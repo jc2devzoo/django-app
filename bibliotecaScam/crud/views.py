@@ -14,7 +14,7 @@ from .utils import extrair_cdu_cdi
 
 def lista_livros(request):
     livros = Livro.objects.all()
-    return render(request, 'biblioteca/lista_livros.html', {'livros': livros})
+    return render(request, 'crud/lista_livros.html', {'livros': livros})
 
 
 def novo_livro(request):
@@ -32,10 +32,10 @@ def novo_livro(request):
                     messages.warning(request, f'Erro no OCR: {exc}')
             livro.save()
             messages.success(request, 'Livro cadastrado com sucesso!')
-            return redirect('biblioteca:lista_livros')
+            return redirect('crud:lista_livros')
     else:
         form = LivroForm()
-    return render(request, 'biblioteca/novo_livro.html', {'form': form})
+    return render(request, 'crud/novo_livro.html', {'form': form})
 
 
 # ---------------- EMPRÉSTIMOS (sem delete) ----------------
@@ -50,15 +50,15 @@ def novo_emprestimo(request):
                 request,
                 'Empréstimo registrado e comprovante enviado por e-mail.'
             )
-            return redirect('biblioteca:lista_emprestimos')
+            return redirect('crud:lista_emprestimos')
     else:
         form = EmprestimoForm()
-    return render(request, 'biblioteca/novo_emprestimo.html', {'form': form})
+    return render(request, 'crud/novo_emprestimo.html', {'form': form})
 
 
 def lista_emprestimos(request):
     emprestimos = Emprestimo.objects.select_related('livro', 'usuario')
-    return render(request, 'biblioteca/lista_emprestimos.html',
+    return render(request, 'crud/lista_emprestimos.html',
                   {'emprestimos': emprestimos})
 
 
@@ -70,8 +70,8 @@ def devolver_emprestimo(request, pk):
         emprestimo.save()
         _enviar_email_devolucao(emprestimo)
         messages.success(request, 'Devolução registrada.')
-        return redirect('biblioteca:lista_emprestimos')
-    return render(request, 'biblioteca/devolver_emprestimo.html',
+        return redirect('crud:lista_emprestimos')
+    return render(request, 'crud/devolver_emprestimo.html',
                   {'emprestimo': emprestimo})
 
 
@@ -88,16 +88,16 @@ def nova_resenha(request, livro_id):
             resenha.usuario = request.user
             resenha.save()
             messages.success(request, 'Resenha registrada!')
-            return redirect('biblioteca:lista_resenhas', livro_id=livro.id)
+            return redirect('crud:lista_resenhas', livro_id=livro.id)
     else:
         form = ResenhaForm()
-    return render(request, 'biblioteca/nova_resenha.html',
+    return render(request, 'crud/nova_resenha.html',
                   {'form': form, 'livro': livro})
 
 
 def lista_resenhas(request, livro_id):
     livro = get_object_or_404(Livro, pk=livro_id)
-    return render(request, 'biblioteca/lista_resenhas.html', {'livro': livro})
+    return render(request, 'crud/lista_resenhas.html', {'livro': livro})
 
 
 # ---------------- HELPERS DE E-MAIL ----------------

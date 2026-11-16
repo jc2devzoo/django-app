@@ -31,7 +31,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -105,6 +106,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# crud_projeto/settings.py (o arquivo settings.py do seu projeto)
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost:8000',
+    'http://localhost:8000',
+    # se usar ngrok, inclua o domínio dele também:
+    # 'https://abcd-1234.sa.ngrok.io',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
@@ -121,7 +129,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
+
+# Pastas onde VOCÊ coloca arquivos estáticos (desenvolvimento)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Pasta para onde o collectstatic COPIA os arquivos (produção)
+# NÃO deve existir manualmente nem estar em STATICFILES_DIRS
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Email

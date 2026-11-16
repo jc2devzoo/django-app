@@ -1,0 +1,10 @@
+{% extends "crud/base.html" %}
+{% block content %}
+<h1>Registrar devolução</h1>
+<p>Livro: <strong>{{ emprestimo.livro.titulo }}</strong></p>
+<p>Usuário: {{ emprestimo.usuario.username }}</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirmar devolução</button>
+</form>
+{% endblock %}

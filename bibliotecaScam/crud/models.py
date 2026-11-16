@@ -11,6 +11,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     tipo = models.CharField(max_length=20, choices=TIPOS, default='aluno')
+    
 
     def __str__(self):
         nome = self.user.get_full_name() or self.user.username
@@ -41,6 +42,7 @@ class Emprestimo(models.Model):
     # PROTECT garante que livros/usuários não sejam apagados enquanto houver histórico
     livro = models.ForeignKey(Livro, on_delete=models.PROTECT, related_name='emprestimos')
     usuario = models.ForeignKey(User, on_delete=models.PROTECT, related_name='emprestimos')
+    aluno = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Aluno", default= 1)
     data_emprestimo = models.DateTimeField(auto_now_add=True)
     data_devolucao_prevista = models.DateField()
     data_devolucao_real = models.DateField(null=True, blank=True)

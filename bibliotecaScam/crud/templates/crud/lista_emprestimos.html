@@ -1,0 +1,24 @@
+{% extends "crud/base.html" %}
+{% block content %}
+<h1>Empréstimos</h1>
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Livro</th><th>Usuário</th><th>Emprestado</th>
+    <th>Prev. devolução</th><th>Status</th><th>Ação</th>
+  </tr>
+  {% for e in emprestimos %}
+  <tr>
+    <td>{{ e.livro.titulo }}</td>
+    <td>{{ e.usuario.username }}</td>
+    <td>{{ e.data_emprestimo|date:"d/m/Y" }}</td>
+    <td>{{ e.data_devolucao_prevista|date:"d/m/Y" }}</td>
+    <td>{{ e.get_status_display }}</td>
+    <td>
+      {% if e.status == 'ativo' %}
+        <a href="{% url 'crud:devolver_emprestimo' e.id %}">Devolver</a>
+      {% else %} — {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

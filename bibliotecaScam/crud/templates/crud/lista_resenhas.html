@@ -1,0 +1,14 @@
+{% extends "crud/base.html" %}
+{% block content %}
+<h1>Resenhas de {{ livro.titulo }}</h1>
+<ul>
+  {% for r in livro.resenhas.all %}
+    <li>
+      <strong>{{ r.usuario.username }}</strong> — Nota {{ r.nota }}<br>
+      {{ r.resumo }}
+    </li>
+  {% empty %}
+    <li>Nenhuma resenha ainda.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

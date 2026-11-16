@@ -15,12 +15,18 @@ class LivroForm(forms.ModelForm):
 
 
 class EmprestimoForm(forms.ModelForm):
-    dias = forms.IntegerField(min_value=1, initial=7,
+    dias = forms.IntegerField( min_value=1, initial=7,
                               label='Dias de empréstimo')
 
     class Meta:
         model = Emprestimo
-        fields = ['livro', 'usuario']
+        fields = ['livro', 'usuario','aluno']
+
+    widgets = {
+            'aluno': forms.Select(attrs={'class': 'form-select'}),
+            'livro': forms.Select(attrs={'class': 'form-select'}),
+            'usuario': forms.Select(attrs={'class': 'form-select'}),
+            }
 
     def save(self, commit=True):
         instancia = super().save(commit=False)
